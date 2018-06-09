@@ -51,47 +51,60 @@ public class MainActivity extends AppCompatActivity {
         Pattern upperCase = Pattern.compile("[A-Z]");
         Pattern lowerCase = Pattern.compile("[a-z]");
         Pattern digitCase = Pattern.compile("[0-9]");
+         int count = 0;
 
         //if password contains lower case
         if (!lowerCase.matcher(password).find())
             isLowerCase = false;
-        else
+        else {
             isLowerCase = true;
+            count++;
+        }
 
         //if password contains uppercase
         if (!upperCase.matcher(password).find())
             isUpperCase = false;
-        else
+        else {
             isUpperCase = true;
+            count++;
+        }
 
         //if password contains numbers
         if (!digitCase.matcher(password).find())
             isDigitCase = false;
-        else
+        else {
             isDigitCase = true;
+            count++;
+        }
 
         //is password is less then 8 characters
         if (password.length() < 8)
             length = false;
-        else
+        else {
             length = true;
+            count++;
+        }
 
         //if password equals password
         if (password.equals("password"))
             isPassword = true;
-        else
+        else {
             isPassword = false;
+            count++;
+        }
 
         if (isLowerCase && isUpperCase && isDigitCase && length && !isPassword)
             valid = true;
         else
             valid = false;
 
+        showToast(count);
+
         return valid;
 
     }
 
-    /*private void showToast (String text) {
-        Toast.makeText(MainActivity.this, "Copying "+text, Toast.LENGTH_SHORT).show();
-    }*/
+    private void showToast (Integer count) {
+        Toast.makeText(MainActivity.this, "Passed "+count+" rules.", Toast.LENGTH_SHORT).show();
+    }
 }
