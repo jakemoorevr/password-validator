@@ -32,51 +32,45 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 password = textInput.getText().toString();
 
-                if (validatePassword(password)) {
-                    strength = "Strong";
-                }
-                else {
-                    strength = "Password is too weak";
-                }
-                tv.setText(strength);
+                tv.setText(validatePassword(password));
             }
         });
     }
 
-    public boolean validatePassword (String password) {
+    public String validatePassword (String password) {
+        String strength;
 
-        boolean isUpperCase, isLowerCase, isDigitCase, length, valid, isPassword;
+        if (isLongEnough(password) && isntPassword(password))
+            strength = "Strong";
+        else
+            strength = "Weak";
 
-        Pattern upperCase = Pattern.compile("[A-Z]");
-        Pattern lowerCase = Pattern.compile("[a-z]");
-        Pattern digitCase = Pattern.compile("[0-9]");
-        int count = 0;
+        return strength;
+
+    }
+
+    public boolean isLongEnough (String password) {
+        boolean length;
 
         //is password is less then 8 characters
         if (password.length() < 8)
             length = false;
-        else {
+        else
             length = true;
-            count++;
-        }
+
+        return length;
+    }
+
+    public boolean isntPassword (String password) {
+        boolean isPassword;
 
         //if password equals password
-        if (password.equalsIgnoreCase("password")) {
-            isPassword = true;
-        }
-        else {
+        if (password.equalsIgnoreCase("password"))
             isPassword = false;
-            count++;
-        }
-
-        if (length && !isPassword)
-            valid = true;
         else
-            valid = false;
+            isPassword = true;
 
-        showToast(count);
-        return valid;
-
+        return isPassword;
     }
 
     private void showToast (Integer count) {
