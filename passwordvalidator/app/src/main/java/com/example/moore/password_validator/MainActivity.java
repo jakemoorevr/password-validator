@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             length = true;
 
         //if password equals password
-        if (password.equals("password"))
+        if (password.equalsIgnoreCase("password"))
             isPassword = true;
         else
             isPassword = false;
@@ -90,8 +90,4 @@ public class MainActivity extends AppCompatActivity {
         return valid;
 
     }
-
-    /*private void showToast (String text) {
-        Toast.makeText(MainActivity.this, "Copying "+text, Toast.LENGTH_SHORT).show();
-    }*/
 }
