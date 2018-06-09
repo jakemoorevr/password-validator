@@ -6,6 +6,9 @@ import static org.junit.Assert.*;
 
 public class MainActivityTest {
 
+    //False means that the input would have been rejected as a password.
+    //True means that the input would have been accepted as a password.
+
     @Test
     public void isLongEnough() {
         String input = "PASSword123";
