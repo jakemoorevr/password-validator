@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
                     strength = "Password is too weak";
                 }
                 tv.setText(strength);
-                //showToast(password);
             }
         });
     }
@@ -51,43 +50,36 @@ public class MainActivity extends AppCompatActivity {
         Pattern upperCase = Pattern.compile("[A-Z]");
         Pattern lowerCase = Pattern.compile("[a-z]");
         Pattern digitCase = Pattern.compile("[0-9]");
-
-        //if password contains lower case
-        if (!lowerCase.matcher(password).find())
-            isLowerCase = false;
-        else
-            isLowerCase = true;
-
-        //if password contains uppercase
-        if (!upperCase.matcher(password).find())
-            isUpperCase = false;
-        else
-            isUpperCase = true;
-
-        //if password contains numbers
-        if (!digitCase.matcher(password).find())
-            isDigitCase = false;
-        else
-            isDigitCase = true;
+        int count = 0;
 
         //is password is less then 8 characters
         if (password.length() < 8)
             length = false;
-        else
+        else {
             length = true;
+            count++;
+        }
 
         //if password equals password
-        if (password.equalsIgnoreCase("password"))
+        if (password.equalsIgnoreCase("password")) {
             isPassword = true;
-        else
+        }
+        else {
             isPassword = false;
+            count++;
+        }
 
-        if (isLowerCase && isUpperCase && isDigitCase && length && !isPassword)
+        if (length && !isPassword)
             valid = true;
         else
             valid = false;
 
+        showToast(count);
         return valid;
 
+    }
+
+    private void showToast (Integer count) {
+        Toast.makeText(MainActivity.this, "Passed "+count+" rules.", Toast.LENGTH_SHORT).show();
     }
 }
