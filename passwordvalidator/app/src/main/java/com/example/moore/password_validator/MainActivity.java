@@ -31,77 +31,87 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 password = textInput.getText().toString();
-
-                if (validatePassword(password)) {
-                    strength = "Strong";
-                }
-                else {
-                    strength = "Password is too weak";
-                }
-                tv.setText(strength);
-                //showToast(password);
+                tv.setText(validatePassword(password));
             }
         });
     }
 
-    public boolean validatePassword (String password) {
+    public String validatePassword (String password) {
+        String strength;
 
-        boolean isUpperCase, isLowerCase, isDigitCase, length, valid, isPassword;
+        if (hasUpperCase(password) && hasNumbers(password) && hasLowerCase(password) &&
+                isLongEnough(password) && isntPassword(password))
+            strength = "Strong";
+        else
+            strength = "Weak";
 
-        Pattern upperCase = Pattern.compile("[A-Z]");
-        Pattern lowerCase = Pattern.compile("[a-z]");
+        //showToast(count);
+
+        return strength;
+
+    }
+
+    public boolean hasNumbers (String password) {
+        boolean isDigitCase;
         Pattern digitCase = Pattern.compile("[0-9]");
-         int count = 0;
-
-        //if password contains lower case
-        if (!lowerCase.matcher(password).find())
-            isLowerCase = false;
-        else {
-            isLowerCase = true;
-            count++;
-        }
-
-        //if password contains uppercase
-        if (!upperCase.matcher(password).find())
-            isUpperCase = false;
-        else {
-            isUpperCase = true;
-            count++;
-        }
 
         //if password contains numbers
         if (!digitCase.matcher(password).find())
             isDigitCase = false;
-        else {
+        else
             isDigitCase = true;
-            count++;
-        }
+
+        return isDigitCase;
+    }
+
+    public boolean hasLowerCase (String password) {
+        boolean isLowerCase;
+        Pattern lowerCase = Pattern.compile("[a-z]");
+
+        //if password contains lower case
+        if (!lowerCase.matcher(password).find())
+            isLowerCase = false;
+        else
+            isLowerCase = true;
+
+        return isLowerCase;
+    }
+
+    public boolean hasUpperCase (String password) {
+        boolean isUpperCase;
+        Pattern upperCase = Pattern.compile("[A-Z]");
+
+        //if password contains uppercase
+        if (!upperCase.matcher(password).find())
+            isUpperCase = false;
+        else
+            isUpperCase = true;
+
+        return isUpperCase;
+    }
+
+    public boolean isLongEnough (String password) {
+        boolean length;
 
         //is password is less then 8 characters
         if (password.length() < 8)
             length = false;
-        else {
+        else
             length = true;
-            count++;
-        }
+
+        return length;
+    }
+
+    public boolean isntPassword (String password) {
+        boolean isPassword;
 
         //if password equals password
-        if (password.equals("password"))
-            isPassword = true;
-        else {
+        if (password.equalsIgnoreCase("password"))
             isPassword = false;
-            count++;
-        }
-
-        if (isLowerCase && isUpperCase && isDigitCase && length && !isPassword)
-            valid = true;
         else
-            valid = false;
+            isPassword = true;
 
-        showToast(count);
-
-        return valid;
-
+        return isPassword;
     }
 
     private void showToast (Integer count) {
